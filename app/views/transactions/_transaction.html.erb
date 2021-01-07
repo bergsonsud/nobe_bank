@@ -1,0 +1,6 @@
+<% if transaction.type_transaction == 'deposit' %>
+  <i class="material-icons tiny green-text">call_made</i>
+<% else %>
+  <i class="material-icons tiny red-text">call_received</i>
+<% end %>
+<%=transaction.type_transaction%> <%=transaction.value%>

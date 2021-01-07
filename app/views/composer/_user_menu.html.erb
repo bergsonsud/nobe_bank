@@ -1,1 +1,6 @@
+Agência 001- Conta <%=format('%06d', current_user.id)%>
+
+Saldo <%= current_user.accounts.first.amount%>
+
+<%= current_user.name%>
 <li><%= render 'devise/menu/login_items' %></li>

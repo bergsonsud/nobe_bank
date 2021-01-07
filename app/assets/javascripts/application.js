@@ -19,9 +19,16 @@
 //= require_tree .
 
 
-
+$(function() {
+  $('.value').maskMoney();
+})
 
  $(document).on('turbolinks:load', function() {
   $('.dropdown-trigger').dropdown();
 });
 
+$(document).ready(function(){
+   $('.collapsible').collapsible();
+ });
+
+ 
