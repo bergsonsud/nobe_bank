@@ -20,7 +20,6 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 pt-BR:
-  hello: "Olá"
   day: "dia"
   days: "dias"
   week: "semana"
@@ -77,6 +76,11 @@ pt-BR:
         send_paranoid_instructions: "Se a sua conta existir, você receberá um e-mail com instruções sobre como desbloqueá-la, em poucos minutos."
         unlocked: "Sua conta foi desbloqueada com sucesso. Faça login para continuar."
 
+  will_paginate:
+    previous_label: "&#8592; Anterior"
+    next_label: "Próximo &#8594;"
+    page_gap: "&hellip;"
+
   errors:
       format: "%{attribute} %{message}"
       messages:
@@ -127,33 +131,27 @@ pt-BR:
   activerecord:
     attributes:
         user:
-          name: "Nome"
           password: "Senha"
           password_confirmation: "Confirmação de Senha"
           current_password: "Senha atual"
-        account:
-          amount: "Valor total"
         transaction:
           value: "Valor"
-          description: "Descrição"
-          tax: "Taxa"
-          date: "Data"
+          type_transactions:
+            deposit: "Depósito"
+            withdraw: "Saque"
+            transfer: "Transferência"
 
 
+        
     models:
-      user:
-        one: "Usuário"
-        other: "Usuários"
-      account:
-        one: "Conta"
-        other: "Contas"
-      transaction:
-        one: "Transação"
-        other: "Transações"
+      customer:
+        one: "Cliente"
+        other: "Clientes"            
+      group:
+        one: "Grupo"
+        other: "Grupos"
 
-
-
-
+ 
   number:
     currency:
       format:
@@ -162,3 +160,5 @@ pt-BR:
         separator: ','
         precision: 2
         format: '%u%n'
+
+

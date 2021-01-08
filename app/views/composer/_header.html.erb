@@ -1,10 +1,29 @@
 <nav class="light-blue lighten-1" role="navigation">
-  <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Logo</a>
+  <div class="nav-wrapper container">
+    <ul class="left hide-on-med-and-down">
+      <li>
+      <%= link_to transactions_index_path do %>
+          Home
+      <% end %>
+      </li>
+      <li>
+      <%= link_to transactions_index_path do %>
+          <i class="material-icons left">attach_money</i>Conta corrente
+      <% end %>
+      </li>
+      <li>
+      <%= link_to transactions_index_path do %>
+          <i class="material-icons left">import_export</i>Transações
+      <% end %>
+      </li>
+      <li>
+      <%= link_to account_reports_path do %>
+          <i class="material-icons left">insert_drive_file</i>Extratos
+      <% end %>
+      </li>
+    </ul>
     <ul class="right hide-on-med-and-down">
-
         <li><%= render 'composer/user_menu' %></li>
     </ul>
-
-
   </div>
 </nav>

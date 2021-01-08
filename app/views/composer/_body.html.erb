@@ -1,41 +1,5 @@
-
 <div class="section no-pad-bot" id="index-banner">
-
   <div class="container">
-    <table style="border-collapse: collapse; border: none; border-spacing: 0px;">
-    	<tr>
-    		<td style="padding-right: 3pt; padding-left: 3pt;">
-    			<a href="#!"><i class="material-icons medium">home</i><br>Home</a>
-        </td>
-    		<td rowspan="4" style="vertical-align: top; padding-right: 3pt; padding-left: 3pt;">
     		<%= yield %>
-        </td>
-        </tr>
-    	<tr>
-    		<td style="padding-right: 3pt; padding-left: 3pt;">
-    		<a href="#!"><i class="material-icons medium">attach_money</i><br>Conta</a>
-        </td>
-      </tr>
-      <tr>
-    		<td style="padding-right: 3pt; padding-left: 3pt;">
-
-          <%= link_to transactions_index_path do %>
-              <i class="material-icons medium">import_export</i>
-              <br>Transações
-          <% end %>
-
-
-        </td>
-      </tr>
-      <tr>
-    		<td style="padding-right: 3pt; padding-left: 3pt;">
-          <%= link_to account_reports_path do %>
-              <i class="material-icons medium">insert_drive_file</i>
-              <br>Extratos
-          <% end %>
-
-        </td>
-      </tr>
-    </table>
   </div>
 </div>

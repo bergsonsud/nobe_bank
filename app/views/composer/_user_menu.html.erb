@@ -1,6 +1,12 @@
-Agência 001- Conta <%=format('%06d', current_user.id)%>
+<ul id="dropdown1" class="dropdown-content">
+  <li><a href="#!">Conta corrente</a></li>
+  <li class="divider"></li>
+  <li><a href="#!">Configurações acesso</a></li>
+  <%= render 'devise/menu/login_items' %>
+</ul>
 
-Saldo <%= current_user.accounts.first.amount%>
-
-<%= current_user.name%>
-<li><%= render 'devise/menu/login_items' %></li>
+<p class="account-data-menu-bar">
+<% str="" %>
+<%= str.concat("Agência 001- Conta ",format('%06d', current_user.id),"\n", "Saldo ",number_to_currency(current_user.accounts.first.amount)) %>
+</p>
+<li><a class="dropdown-trigger" href="#!" data-target="dropdown1"><%= current_user.name%><i class="material-icons right">arrow_drop_down</i></a></li>

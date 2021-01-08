@@ -38,9 +38,9 @@ class AccountController < ApplicationController
       @account = Account.find(@account_id)
     end
 
-    def get_transactions
-      @dates = @account.transactions.where('date >= ?', 30.days.ago).order(date: :desc).map{|x| x.date}
-      @transactions = @account.transactions.where('date >= ?', 30.days.ago)      
+    def get_transactions      
+      @dates = @account.transactions.where('date >= ?', 30.days.ago).order(date: :desc).map{|x| x.date}.uniq
+      @transactions = @account.transactions.where('date >= ?', 30.days.ago).order(id: :desc)      
     end
 
 end

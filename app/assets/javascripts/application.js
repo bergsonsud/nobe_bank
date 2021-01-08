@@ -20,8 +20,8 @@
 
 
 $(function() {
-  $('.value').maskMoney();
-})
+  $('.value').maskMoney({allowNegative: false, decimal:".", thousands:""});
+});
 
  $(document).on('turbolinks:load', function() {
   $('.dropdown-trigger').dropdown();
@@ -31,4 +31,7 @@ $(document).ready(function(){
    $('.collapsible').collapsible();
  });
 
- 
+ $('#alert_close').click(function(){
+     $( "#alert_box" ).fadeOut( "slow", function() {
+     });
+   });
