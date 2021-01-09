@@ -1,0 +1,16 @@
+<%= form_tag url_for(:controller => 'accounts', :action => 'amount'), :method => 'get' do %>
+
+<br><br>
+<div class="row">
+  <div class="input-field col s4">
+    <%= text_field_tag 'start_date',(Time.zone.now-30.days).strftime("%d/%m/%Y"), :class => 'datepicker' %>
+    <label class="active">Data inicio</label>
+  </div>
+  <div class="input-field col s4">
+    <%= text_field_tag 'end_date',Time.zone.now.strftime("%d/%m/%Y"), :class => 'datepicker' %>
+    <label class="active">Data fim</label>
+  </div>
+</div>
+<%= submit_tag 'Filtrar', :class => 'col s6 btn btn-large waves-effect indigo'%>
+
+<%end%>

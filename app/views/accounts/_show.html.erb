@@ -1,0 +1,39 @@
+<% if !@account.active %>
+<div id="warning" class="col s4 materialert warning">
+  É necessário ativar sua conta para utilização do sistema.<br>
+</div>
+<% end %>
+<h4><%=@account.user.name%></h4>
+<div class="row">
+  <div class="col s12 m6">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title activator grey-text text-darken-4">
+          <%= String.new.concat("Agência 001- Conta ",format('%06d', @account.id)) %>
+          <br>
+          <%= String.new.concat(number_to_currency(@account.amount)) %>
+        </span>
+      </div>
+      <div class="card-action">
+        <b>Clientes desde:
+        </b>
+        <%= @account.created_at.strftime('%d/%m/%Y')%>
+      </div>
+      <div class="card-action">
+        <% if @account.active? %>
+          <td>
+            <label class="fields-show-button">
+              <%= link_to 'Inativar', switch_account_path(@account.id,:active => false), remote: true, data: {confirm: "Inativar Cliente: #{@account.user.name} ?"}, :class => 'btn red accent-4' %>
+            </label>
+          </td>
+        <% else %>
+          <td>
+            <label class="fields-show-button">
+              <%= link_to 'Ativar', switch_account_path(@account.id,:active => true),remote: true, data: {confirm: "Ativar Cliente: #{@account.user.name} ?"}, :class => 'btn' %>
+            </label>
+          </td>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

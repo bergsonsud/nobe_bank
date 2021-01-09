@@ -43,6 +43,10 @@ padding-left: 300px;
   font-size: 10px;
 }
 
+.transaction_value{
+  font-size: 12px;
+}
+
 .materialert{
     position: relative;
 

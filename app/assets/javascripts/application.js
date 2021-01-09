@@ -19,19 +19,27 @@
 //= require_tree .
 
 
+
+
 $(function() {
-  $('.value').maskMoney({allowNegative: false, decimal:".", thousands:""});
+  $('.value').maskMoney({
+    allowNegative: false,
+    decimal: ".",
+    thousands: ""
+  });
 });
 
- $(document).on('turbolinks:load', function() {
-  $('.dropdown-trigger').dropdown();
+$(document).on('turbolinks:load', function() {
+  $('.dropdown-trigger').dropdown({
+    hover: true,
+    coverTrigger: false
+  });
 });
 
-$(document).ready(function(){
-   $('.collapsible').collapsible();
- });
+$(document).ready(function() {
+  $('.collapsible').collapsible();
+});
 
- $('#alert_close').click(function(){
-     $( "#alert_box" ).fadeOut( "slow", function() {
-     });
-   });
+$('#alert_close').click(function() {
+  $("#alert_box").fadeOut("slow", function() {});
+});

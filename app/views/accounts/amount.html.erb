@@ -1,0 +1,7 @@
+<%= javascript_pack_tag 'custom_materialize_datepicker' %>
+<%= javascript_pack_tag 'modal_triggers' %>
+
+<%=render 'composer/modal'%>
+<%=render 'composer/transactions/report_options'%>
+<%=render 'composer/accounts/amount_date_filter' if params[:type_report] == '2'%>
+<%= render 'amount_report' if params[:type_report] != '2'%>

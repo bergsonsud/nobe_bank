@@ -1,8 +1,10 @@
+<span class="card-title activator grey-text text-darken-4">
+  <h4><%=transaction.date.strftime("%d/%m/%Y")%></h4>
+</span>
 <div class="card-action">
 	<%= render 'transactions/transaction_symbol', transaction: transaction %>
 	<b><%= Transaction.human_enum_name(:type_transaction, transaction.type_transaction) %></b>
 
 	<%= render 'transactions/transaction_value', transaction: transaction %>
 	<i class="transfer-description"><%= transaction.description %></i><br>
-	<%= link_to 'Exibir', transaction, remote: true, class: "btn btn-sm btn-default" %>
 </div>

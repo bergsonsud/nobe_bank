@@ -5,15 +5,30 @@ Rails.application.routes.draw do
   get 'transactions/transfer'
   post 'transactions/transfer'
 
-  get 'account/reports'
-  get 'account/amount'
+  #get 'account/reports'
+  #get 'account/amount'
   #get 'account/new'
-  post 'account/create'
+  #get 'account/index'
   #get 'account/update'
-  #get 'account/swtich'
+
+
   devise_for :users
-  resources :account
+
   resources :transactions
+
+  resources :accounts do
+    collection do
+      get 'reports'
+      get 'amount'
+      get 'index' 
+
+    end
+
+    member do
+      get 'switch'
+    end
+    
+  end
   #resources :users
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root 'welcome#index'

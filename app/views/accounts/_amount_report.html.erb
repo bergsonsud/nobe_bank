@@ -1,9 +1,9 @@
-<%=render 'composer/transactions/report_options'%>
 <div class="card">
   <div class="card-content">
     <h3>Extrato</h3>
-
+    <h7><%=String.new.concat(params[:start_date] || 30.days.ago.strftime("%d/%m/%Y") ,' - ', params[:end_date] || Time.zone.now.strftime("%d/%m/%Y"))%></<h7>
     <% @dates.each  do |date| %>
+    <br><br>
       <div class="row">
         <div class="col s12 m6">
           <div class="card">

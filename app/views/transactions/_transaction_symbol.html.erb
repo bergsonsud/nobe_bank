@@ -1,0 +1,7 @@
+<% if transaction.type_transaction == 'deposit' %>
+	<i class="material-icons tiny green-text">call_made</i>
+<% elsif transaction.type_transaction == 'withdraw' %>
+	<i class="material-icons tiny red-text">call_received</i>
+<% else %>
+	<i class="material-icons tiny red-text">import_export</i>
+<% end %>

@@ -3,8 +3,13 @@ class TransactionsController < ApplicationController
   before_action :set_tax, only: [:transaction, :do_transaction]
   before_action :set_value, only: [:do_transaction]
   before_action :transaction_name
+  before_action :authenticate_active
+  before_action :set_transaction, only: [:show]
 
   def index
+  end
+
+  def show      
   end
 
   def transaction
@@ -23,8 +28,9 @@ class TransactionsController < ApplicationController
 
     respond_to do |format|
       if @transaction.save
-        format.json { head :no_content }
-        format.html
+        #format.json { head :no_content }
+        #format.html { render :show}
+        format.html {redirect_to "/transactions/#{@transaction.id}"}
       else
         format.html { render :transaction }
         format.json { render json: @transaction.errors, status: :unprocessable_entity }
@@ -57,6 +63,11 @@ class TransactionsController < ApplicationController
 
 
 private
+
+  def set_transaction
+    @transaction = Transaction.find(params[:id])
+  end
+
   def set_account
       @account_id = current_user.accounts.first.id
   end

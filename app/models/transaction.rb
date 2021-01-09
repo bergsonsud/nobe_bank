@@ -33,6 +33,10 @@ class Transaction < ApplicationRecord
     I18n.t("activerecord.attributes.#{model_name.i18n_key}.#{enum_name.to_s.pluralize}.#{enum_value}")
   end
 
+  def recent
+    Time.zone.now-self.created_at<15    
+  end
+
 private
   def value_limits
     if total > account.amount and type_transaction != "deposit"

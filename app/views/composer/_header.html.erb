@@ -1,25 +1,46 @@
+<ul id="dropdown_extratos" class="dropdown-content">
+  <li>
+    <%=link_to 'Extrato',amount_accounts_path(:type_report => 1) %>
+  </li>
+    <li>
+    <%=link_to 'Extrato por período',amount_accounts_path(:type_report => 2) %>
+  </li>
+</ul>
+
+<ul id="dropdown_transactions" class="dropdown-content">
+  <li>
+<%=link_to 'Saque',transactions_transaction_path(:type_transaction => 1) %>
+</li>
+<li>
+<%= link_to 'Depósito', transactions_transaction_path(:type_transaction => 2) %>
+</li>
+<li>
+<%= link_to "Transferência", transactions_transaction_path(:type_transaction => 3) %>
+</li>
+</ul>
+
+
 <nav class="light-blue lighten-1" role="navigation">
   <div class="nav-wrapper container">
     <ul class="left hide-on-med-and-down">
       <li>
-      <%= link_to transactions_index_path do %>
+      <%= link_to root_path do %>
           Home
       <% end %>
       </li>
       <li>
-      <%= link_to transactions_index_path do %>
+      <%= link_to accounts_path do %>
           <i class="material-icons left">attach_money</i>Conta corrente
       <% end %>
       </li>
       <li>
-      <%= link_to transactions_index_path do %>
+        <a class="dropdown-trigger" href="#!" data-target="dropdown_transactions">
           <i class="material-icons left">import_export</i>Transações
-      <% end %>
-      </li>
+        </a>      
       <li>
-      <%= link_to account_reports_path do %>
+        <a class="dropdown-trigger" href="#!" data-target="dropdown_extratos">
           <i class="material-icons left">insert_drive_file</i>Extratos
-      <% end %>
+        </a>
       </li>
     </ul>
     <ul class="right hide-on-med-and-down">
