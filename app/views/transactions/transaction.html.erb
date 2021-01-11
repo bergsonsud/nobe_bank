@@ -1,5 +1,4 @@
 <%= javascript_pack_tag 'custom_materialize_datepicker' %>
-<%= javascript_pack_tag 'custom_tax_value' %>
 <%= render 'composer/transactions/options' %>
 <%= form_tag url_for(:controller => 'transactions', :action => @action_controller, :type_transaction => params[:type_transaction]), :method => 'post' do %>
 
@@ -29,10 +28,6 @@
             <%= text_field_tag 'value','', class: 'validate value', autofocus: true %>
             <label for="#value" data-error="wrong" data-success="right">Quanto você deseja
               <%=@transaction_type%>?</label>
-          </div>
-          <div class="input-field col s4">
-            <%= text_field_tag 'date',Time.zone.now.strftime("%d/%m/%Y"), :class => 'datepicker' %>
-            <label class="active">Data</label>
           </div>
         </div>
 
@@ -67,5 +62,33 @@
 <script type="text/javascript">
 $(function () {
   $('.value').maskMoney({allowNegative: false, decimal: ".", thousands: ""});
+});
+
+function toggleAlert(value){
+  var warning = document.getElementById("warning");
+  if (value == 0) {
+      warning.style.display = "none";
+  } else{
+      warning.style.display = "block";
+      warning.textContent = 'Essa operação tem um custo! Será retirado de sua conta R$ ' + (parseFloat(value)).toFixed(2).toString();      
+  };
+};
+
+$(document).ready(function(){
+  $('#value').keyup(function() {
+    var tax = document.getElementById('tax');
+    var value = document.getElementById('value').value.replace(',', "");
+
+    $.ajax({
+      type:"GET",
+      url:"/transactions/get_tax",
+      dataType:"json",
+      data: {value: value, type_transaction: <%=params[:type_transaction]%>},
+      success:function(result){
+        tax.value = parseFloat(result).toFixed(2);
+        toggleAlert(result);
+      }
+    });
+  });
 });
 </script>

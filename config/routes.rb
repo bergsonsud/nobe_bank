@@ -14,14 +14,17 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  resources :transactions
+  resources :transactions do
+    collection do
+      get 'get_tax'
+    end
+  end
 
   resources :accounts do
     collection do
       get 'reports'
       get 'amount'
       get 'index' 
-
     end
 
     member do

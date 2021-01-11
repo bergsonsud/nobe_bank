@@ -1,7 +1,7 @@
 class TransactionsController < ApplicationController
   before_action :set_account, only: [:do_transaction]
   before_action :set_tax, only: [:transaction, :do_transaction]
-  before_action :set_value, only: [:do_transaction]
+  before_action :set_value, only: [:do_transaction, :get_tax]
   before_action :transaction_name
   before_action :authenticate_active
   before_action :set_transaction, only: [:show]
@@ -16,20 +16,29 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.new
   end
 
-  def do_transaction
+  def get_tax        
+    respond_to do |format|
+      format.json {render json: TaxCalculator.new(@value, Time.zone.now, params[:type_transaction]).calc_tax}
+    end
+  end
+
+
+  def tax
+    TaxCalculator.new(@value, Time.zone.now, params[:type_transaction]).calc_tax
+  end
+
+  def do_transaction    
     @transaction = Transaction.new(
       :account_id => @account_id,
       :type_transaction => params[:type_transaction].to_i,
-      :tax => params[:tax_calc].to_i+params[:extra].to_i,
+      :tax => tax,
       :value => @value,
       :description => params[:description],
-      :date => Date.parse(params[:date]))
+      :date => Time.zone.now)
 
 
     respond_to do |format|
       if @transaction.save
-        #format.json { head :no_content }
-        #format.html { render :show}
         format.html {redirect_to "/transactions/#{@transaction.id}"}
       else
         format.html { render :transaction }
@@ -41,25 +50,25 @@ class TransactionsController < ApplicationController
   def transfer
   end
 
-  def calc_tax
-    if params[:type_transaction] == '3'
-      calc
-    else
-      0
-    end
-  end
+  # def calc_tax
+  #   if params[:type_transaction] == '3'
+  #     calc
+  #   else
+  #     0
+  #   end
+  # end
 
 
-  def calc
-    #helper days = {0 => "Sunday",1 => "Monday", 2 => "Tuesday",3 => "Wednesday",4 => "Thursday",5 => "Friday",6 => "Saturday"}
-    today = Time.zone.now.wday
-    hour = Time.zone.now.hour
-    if today.between?(1,6) and hour.between?(9,18)
-      return 5
-    else
-      return 7
-    end
-  end
+  # def calc
+  #   #helper days = {0 => "Sunday",1 => "Monday", 2 => "Tuesday",3 => "Wednesday",4 => "Thursday",5 => "Friday",6 => "Saturday"}
+  #   today = Time.zone.now.wday
+  #   hour = Time.zone.now.hour
+  #   if today.between?(1,6) and hour.between?(9,18)
+  #     return 5
+  #   else
+  #     return 7
+  #   end
+  # end
 
 
 private
@@ -73,7 +82,7 @@ private
   end
 
   def set_tax
-    @tax = calc_tax
+    #@tax = calc_tax
   end
 
   def set_value

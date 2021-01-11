@@ -144,12 +144,15 @@ pt-BR:
 
         
     models:
-      customer:
-        one: "Cliente"
-        other: "Clientes"            
-      group:
-        one: "Grupo"
-        other: "Grupos"
+      user:
+        one: "Usuário"
+        other: "Usuários"            
+      transaction:
+        one: "Transação"
+        other: "Transações"
+      account:
+        one: "Conta"
+        other: "Contas"        
 
  
   number:

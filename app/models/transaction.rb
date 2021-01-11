@@ -1,11 +1,13 @@
 class Transaction < ApplicationRecord
   belongs_to :account
+  has_one :user, through: :account
   enum type_transaction: {withdraw: 1, deposit: 2, transfer: 3}
 
   validate :value_limits
   validates :value, numericality: { greater_than: 0 }
 
   after_save :update_amount_account
+  after_initialize :calc_tax
 
   def update_amount_account
     case self.type_transaction
@@ -14,6 +16,10 @@ class Transaction < ApplicationRecord
     else
       self.account.update({:amount => self.account.amount-self.value-self.tax})
     end
+  end
+
+  def calc_tax    
+    self.tax = TaxCalculator.new(self.value, self.date, self.type_transaction).calc_tax
   end
 
   def total

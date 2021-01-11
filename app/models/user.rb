@@ -5,8 +5,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :accounts
+  has_many :transactions, through: :accounts
 
   after_create :create_account
+
 
   def create_account
     Account.create(user_id: self.id, amount: 0)
