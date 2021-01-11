@@ -2,6 +2,8 @@
 	<i class="material-icons tiny green-text">call_made</i>
 <% elsif transaction.type_transaction == 'withdraw' %>
 	<i class="material-icons tiny red-text">call_received</i>
-<% else %>
+<% elsif transaction.type_transaction == 'transfer' and transaction.type_transfer == 'sent' %>
 	<i class="material-icons tiny red-text">import_export</i>
+<% else%>
+	<i class="material-icons tiny green-text">import_export</i>	
 <% end %>

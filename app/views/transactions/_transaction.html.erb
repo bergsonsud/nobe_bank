@@ -1,8 +1,25 @@
 <div class="card-action">
 	<%= render 'transactions/transaction_symbol', transaction: transaction %>
-	<b><%= Transaction.human_enum_name(:type_transaction, transaction.type_transaction) %></b>
+	<b>
+		<%= Transaction.human_enum_name(:type_transaction, transaction.type_transaction) %>
+	</b>
+	<% if transaction.type_transaction == 'transfer' %>
+	<b>
+		<%= Transaction.human_enum_name(:type_transfer, transaction.type_transfer) %>
+	</b>
+	<% end %>
 
+	<%= link_to transaction, remote: true, class: "waves-effect waves-light btn-tiny" do %>
+	<i class="material-icons left">visibility</i>
+	<% end %>
+	<% if transaction.type_transaction == 'transfer' and transaction.type_transfer == 'sent' %>
+		<b class="transfer-description"> => <%= String.new.concat(Account.find(transaction.account_recipient_id).user.name," - Agência 001- Conta ",format('%06d', transaction.account_sender_id)) %></b>
+	<% end %>
+	<br>
 	<%= render 'transactions/transaction_value', transaction: transaction %>
-	<i class="transfer-description"><%= transaction.description %></i><br>
-	<%= link_to 'Exibir', transaction, remote: true, class: "btn btn-sm btn-default" %>
+	<% if transaction.description != '' %>
+	<br>
+	<i class="transfer-description"><%= transaction.description %></i>
+	<% end %>
+
 </div>

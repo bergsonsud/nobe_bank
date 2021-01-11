@@ -9,8 +9,7 @@ class User < ApplicationRecord
 
   after_create :create_account
 
-
   def create_account
-    Account.create(user_id: self.id, amount: 0)
+    Account.create(user_id: id, amount: 0)
   end
 end

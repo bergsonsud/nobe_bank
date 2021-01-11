@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_08_221548) do
+ActiveRecord::Schema.define(version: 2021_01_11_152136) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,9 @@ ActiveRecord::Schema.define(version: 2021_01_08_221548) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "date"
+    t.integer "type_transfer"
+    t.integer "account_sender_id"
+    t.integer "account_recipient_id"
     t.index ["account_id"], name: "index_transactions_on_account_id"
   end
 

@@ -1,7 +1,8 @@
 <b class="transaction_value"><%=number_to_currency transaction.transaction_money_moviment%></b>
 
-<% if transaction.type_transaction == 'transfer' %>
+<% if transaction.type_transaction == 'transfer' and transaction.type_transfer == 'sent' %>
 	<div class="transfer-description">
+		<br>
 		<%= String.new().concat('Transferência ', number_to_currency(transaction.value), ' | ', 'Taxa ', number_to_currency(transaction.tax) )%>
 	</div>
 <% end %>

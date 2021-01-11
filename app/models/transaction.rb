@@ -1,37 +1,83 @@
 class Transaction < ApplicationRecord
   belongs_to :account
   has_one :user, through: :account
-  enum type_transaction: {withdraw: 1, deposit: 2, transfer: 3}
+  enum type_transaction: { withdraw: 1, deposit: 2, transfer: 3 }
+  enum type_transfer: { no_transfer: 1, sent: 2, received: 3 }
 
-  validate :value_limits
+  validate :value_limits, if: lambda {
+                                type_transaction == 'withdraw' or (type_transaction == 'transfer' and type_transfer == 'sent')
+                              }
   validates :value, numericality: { greater_than: 0 }
 
-  after_save :update_amount_account
   after_initialize :calc_tax
+  after_save :update_sender_account
 
-  def update_amount_account
-    case self.type_transaction
-    when 'deposit'
-      self.account.update({:amount => self.account.amount+self.value})
-    else
-      self.account.update({:amount => self.account.amount-self.value-self.tax})
+  # after_save :create_received_transaction
+  after_save :update_recipient_account
+
+  def create_received_transaction(type)
+    if type == 'sent'
+      Transaction.create(account_id: account_recipient_id,
+                         account_sender_id: account_sender_id,
+                         account_recipient_id: account_recipient_id,
+                         type_transaction: 3,
+                         type_transfer: 3,
+                         tax: 0,
+                         value: value,
+                         description: description_transaction_received,
+                         date: date)
     end
   end
 
-  def calc_tax    
-    self.tax = TaxCalculator.new(self.value, self.date, self.type_transaction).calc_tax
+  def description_transaction_received
+    ''.concat('Transferência recebida de ', Account.find(account_sender_id).user.name,
+              ' - Agência 001- Conta ', format('%06d', account_sender_id))
+  end
+
+  def update_sender_account
+    case type_transaction
+    when 'transfer'
+      account.update({ amount: account.amount - value - tax })
+      create_received_transaction(type_transfer)
+    when 'withdraw'
+      account.update({ amount: account.amount - value })
+    else
+      account.update({ amount: account.amount + value })
+    end
+  end
+
+  def update_recipient_account
+    case type_transaction
+    when 'transfer'
+      recepient_account = Account.find(account_recipient_id)
+      recepient_account.update({ amount: recepient_account.amount + value })
+    end
+  end
+
+  def calc_tax
+    if type_transfer == 'sent'
+      self.tax = TaxCalculator.new(value, date, type_transaction, type_transfer).calc_tax
+    else
+      0
+    end
   end
 
   def total
-    self.value+self.tax
+    value + calc_tax
   end
 
   def transaction_money_moviment
-    case self.type_transaction
+    case type_transaction
     when 'deposit'
-      return self.total
+      total
+    when 'transfer'
+      if type_transfer == 'sent'
+        -total
+      else
+        total
+      end
     else
-      return -self.total
+      -total
     end
   end
 
@@ -40,15 +86,12 @@ class Transaction < ApplicationRecord
   end
 
   def recent
-    Time.zone.now-self.created_at<15    
+    Time.zone.now - created_at < 15
   end
 
-private
+  private
+
   def value_limits
-    if total > account.amount and type_transaction != "deposit"
-      errors.add("Saldo", "insuficiente!")
-    end
+    errors.add('Saldo', 'insuficiente!') if total > account.amount
   end
-
-
 end

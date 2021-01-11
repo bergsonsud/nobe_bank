@@ -140,6 +140,10 @@ pt-BR:
             deposit: "Depósito"
             withdraw: "Saque"
             transfer: "Transferência"
+          type_transfers:
+            no_transfer: "Não transferência"
+            sent: "Enviada"
+            received: "Recebida"            
 
 
         

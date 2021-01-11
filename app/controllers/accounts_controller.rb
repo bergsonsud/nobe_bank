@@ -13,22 +13,22 @@ class AccountsController < ApplicationController
   def show
   end
 
-  def switch
-    @account.active = params[:active]
-    respond_to do |format|
-      if @account.save
-        format.js
-      else
-        format.json { render json: @account.errors, status: :unprocessable_entity }
-      end
-
-      if !@account.active?
-        sign_out
-        render :js => "window.location = '/accounts/index'"
-      end
+def switch
+  @account.active = params[:active]
+  respond_to do |format|
+    if @account.save
+      format.js
+    else
+      format.json { render json: @account.errors, status: :unprocessable_entity }
     end
 
+    unless @account.active?
+      sign_out
+      render js: "window.location = '/accounts/index'"
+    end
   end
+end
+
 
   def reports
   end
