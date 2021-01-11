@@ -14,6 +14,8 @@ module NobeBank
     config.time_zone = 'Brasilia'
     config.assets.initialize_on_precompile = false
     config.i18n.default_locale = :'pt-BR'
+
+    config.secret_key_base = 'h12j3h12j3hj12h1jkjjjjjjahkkk'
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
