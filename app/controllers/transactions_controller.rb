@@ -9,14 +9,17 @@ class TransactionsController < ApplicationController
   def index
   end
 
-  def show      
+  def show
+    if current_user != @transaction.user
+      redirect_to account_path
+    end
   end
 
   def transaction
     @transaction = Transaction.new
   end
 
-  def get_tax        
+  def get_tax
     respond_to do |format|
       format.json {render json: TaxCalculator.new(@value, Time.zone.now, params[:type_transaction]).calc_tax}
     end
@@ -27,7 +30,7 @@ class TransactionsController < ApplicationController
     TaxCalculator.new(@value, Time.zone.now, params[:type_transaction]).calc_tax
   end
 
-  def do_transaction    
+  def do_transaction
     @transaction = Transaction.new(
       :account_id => @account_id,
       :type_transaction => params[:type_transaction].to_i,

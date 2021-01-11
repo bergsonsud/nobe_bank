@@ -44,10 +44,10 @@ class AccountsController < ApplicationController
 
     def get_transactions
       if params[:start_date].present?
-        @dates = @account.transactions.where('DATE(date) between ? and ?',params[:start_date].to_date.strftime("%Y-%m-%d"), params[:end_date].to_date.strftime("%Y-%m-%d")).order(date: :desc).map{|x| x.date}.uniq
+        @dates = @account.transactions.where('DATE(date) between ? and ?',params[:start_date].to_date.strftime("%Y-%m-%d"), params[:end_date].to_date.strftime("%Y-%m-%d")).order(date: :desc).map{|x| x.date.strftime("%Y-%m-%d")}.uniq
         @transactions = @account.transactions.where('DATE(date) between ? and ?',params[:start_date].to_date.strftime("%Y-%m-%d"), params[:end_date].to_date.strftime("%Y-%m-%d")).order(id: :desc)
       else
-        @dates = @account.transactions.where('date >= ?', 30.days.ago).order(date: :desc).map{|x| x.date}.uniq
+        @dates = @account.transactions.where('date >= ?', 30.days.ago).order(date: :desc).map{|x| x.date.strftime("%Y-%m-%d")}.uniq
         @transactions = @account.transactions.where('date >= ?', 30.days.ago).order(id: :desc)
       end
     end

@@ -9,10 +9,10 @@
           <div class="card">
             <div class="card-content">
               <span class="card-title activator grey-text text-darken-4">
-                <%=date.strftime("%d/%m/%Y")%>
+                <%=date.to_date.strftime("%d/%m/%Y")%>
               </span>
             </div>
-            <% @transactions.where('date = ?',date).each  do |transaction| %>
+            <% @transactions.where('DATE(date) = ?',date.to_date).each  do |transaction| %>
               <%= render transaction %>
             <% end %>
           </div>
