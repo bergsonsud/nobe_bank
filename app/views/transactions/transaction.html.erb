@@ -48,10 +48,10 @@
               <label class="active">Agência</label>
             </div>
           <div class="input-field col s4">
-            <%= text_field_tag 'account_recipient','', class: 'validate', autofocus: true %>
+            <%= text_field_tag 'account_recipient','', class: 'validate', required: true %>
             <label for="#account_recipient" data-error="wrong" data-success="right">Conta</label>
           </div>
-          </div>          
+          </div>
           <div class="row">
             <div class="input-field col s8">
               <%= text_field_tag 'description','', class: 'validate' %>
@@ -73,13 +73,14 @@ $(function () {
   $('.value').maskMoney({allowNegative: false, decimal: ".", thousands: ""});
 });
 
-function toggleAlert(value){
+function toggleAlert(value,tax){
+  var total = parseFloat(value)+parseFloat(tax);
   var warning = document.getElementById("warning");
-  if (value == 0) {
+  if (total == 0) {
       warning.style.display = "none";
   } else{
       warning.style.display = "block";
-      warning.textContent = 'Essa operação tem um custo! Será retirado de sua conta R$ ' + (parseFloat(value)).toFixed(2).toString();      
+      warning.textContent = 'Essa operação tem um custo! Será retirado de sua conta R$ ' + (parseFloat(total)).toFixed(2).toString();
   };
 };
 
@@ -97,7 +98,7 @@ $(document).ready(function(){
       data: {value: value, type_transaction: <%=params[:type_transaction]%>},
       success:function(result){
         tax.value = parseFloat(result).toFixed(2);
-        toggleAlert(result);
+        toggleAlert(value,result);
       }
     });
   });

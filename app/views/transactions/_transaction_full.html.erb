@@ -10,12 +10,10 @@
 		<%= Transaction.human_enum_name(:type_transfer, transaction.type_transfer) %>
 	</b>
 	<% end %>
-
-	<% if transaction.type_transaction == 'transfer' and transaction.type_transfer == 'sent' %>
-		<b class="transfer-description"> => <%= String.new.concat(Account.find(transaction.account_recipient_id).user.name," - Agência 001- Conta ",format('%06d', transaction.account_sender_id)) %></b><br>
-	<% end %>
-
+	<%= render 'transactions/transaction_recipient_data', transaction: transaction %>
+	<br>
 
 	<%= render 'transactions/transaction_value', transaction: transaction %>
+	<br>	
 	<i class="transfer-description"><%= transaction.description %></i><br>
 </div>

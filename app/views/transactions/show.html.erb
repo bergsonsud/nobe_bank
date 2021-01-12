@@ -15,8 +15,9 @@
         <div class="card">
           <div class="card-content">
             <span class="card-title activator grey-text text-darken-4">
-              <%= render 'transactions/transaction_symbol', transaction: @transaction %>
-              <%= Transaction.human_enum_name(:type_transaction, @transaction.type_transaction) %>
+            <%= render 'transactions/transaction_symbol', transaction: @transaction %>
+            <%= render 'transactions/transaction_type', transaction: @transaction %><br>
+            <%= render 'transactions/transaction_recipient_data', transaction: @transaction %>
             </span>
           </div>
           <div class="card-action">

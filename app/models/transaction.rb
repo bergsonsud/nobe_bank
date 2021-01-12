@@ -7,6 +7,10 @@ class Transaction < ApplicationRecord
   validate :value_limits, if: lambda {
                                 type_transaction == 'withdraw' or (type_transaction == 'transfer' and type_transfer == 'sent')
                               }
+
+  validate :account_recipient_exist, if: lambda {type_transaction == 'transfer' and type_transfer == 'sent'}
+  validate :self_transfer, if: lambda {type_transaction == 'transfer' and type_transfer == 'sent'}
+
   validates :value, numericality: { greater_than: 0 }
 
   after_initialize :calc_tax
@@ -93,5 +97,13 @@ class Transaction < ApplicationRecord
 
   def value_limits
     errors.add('Saldo', 'insuficiente!') if total > account.amount
+  end
+
+  def account_recipient_exist
+    errors.add('Conta', 'inexistente!') if !User.exists? id: self.account_recipient_id
+  end
+
+  def self_transfer
+    errors.add('Não', 'é permitido fazer trasnferência para sua própria conta!') if self.account_sender_id == self.account_recipient_id
   end
 end

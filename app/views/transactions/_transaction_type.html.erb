@@ -1,0 +1,8 @@
+	<b>
+		<%= Transaction.human_enum_name(:type_transaction, transaction.type_transaction) %>
+	</b>
+	<% if transaction.type_transaction == 'transfer' %>
+	<b>
+		<%= Transaction.human_enum_name(:type_transfer, transaction.type_transfer) %>
+	</b>
+	<% end %>

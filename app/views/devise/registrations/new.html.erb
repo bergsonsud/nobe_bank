@@ -2,9 +2,21 @@
 <div class="container">
   <h2>Cria nova conta</h2>
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-    <%= render "devise/shared/error_messages", resource: resource %>
   <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
-
+    <% if resource.errors.any? %>
+      <div id="error_explanation">
+        <ul>
+          <% resource.errors.full_messages.each do |message| %>
+            <li>
+              <div class="materialert">
+                <i class="material-icons">error_outline</i>
+                <span><%= message %></span>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
     <div class='row'>
       <div class="input-field col s12">

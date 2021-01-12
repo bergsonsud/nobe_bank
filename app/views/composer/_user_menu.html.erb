@@ -1,11 +1,8 @@
 <ul id="dropdown1" class="dropdown-content">
   <li>
-    <a href="#!">Conta corrente</a>
+    <%=link_to 'Conta corrente',accounts_path() %>
   </li>
   <li class="divider"></li>
-  <li>
-    <a href="#!">Configurações acesso</a>
-  </li>
   <%= render 'devise/menu/login_items' %>
 </ul>
 

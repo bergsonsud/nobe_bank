@@ -3,7 +3,19 @@
   <h2>Entrar</h2>
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+    <% flash.each do |name, msg| %>
 
+      <div id="error_explanation">
+        <ul>        
+            <li>
+              <div class="materialert">
+                <i class="material-icons">error_outline</i>
+                <span><%= content_tag :div, msg, id: "flash_#{name}" %></span>
+              </div>
+            </li>
+        </ul>
+      </div>
+    <% end %>
     <div class='row'>
       <div class="input-field col s12">
       <%= f.email_field :email, autofocus: true, class: 'validate' %>

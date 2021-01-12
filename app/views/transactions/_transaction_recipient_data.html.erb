@@ -1,0 +1,3 @@
+	<% if transaction.type_transaction == 'transfer' and transaction.type_transfer == 'sent' %>
+		<b class="transfer-description"> => <%= String.new.concat(Account.find(transaction.account_recipient_id).user.name," - Agência 001- Conta ",format('%06d', transaction.account_recipient_id)) %></b>
+	<% end %>
